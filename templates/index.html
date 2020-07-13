@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" type="image/png" href="http://example.com/favicon.png" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!--    video js-->
+    <link href="https://vjs.zencdn.net/7.4.1/video-js.css" rel="stylesheet">
+
+    <!--    style-->
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <title>IGOS Demo</title>
+</head>
+
+<body>
+
+    <section id="cover">
+        <div class="container">
+
+            <!--fixed top bar-->
+
+            <div class="fixed-top">
+                <div class="row" id="header">
+                    <div class="col-md-1 align-self-center" id="osu-logo">
+                        <img src="/static/images/util/osu.png" class="img-fluid" alt="Logo Image">
+                    </div>
+                    <div class="offset-md-1 col-md-8 align-self-center">
+                        <h1 class="display-4 mx-auto my-3 text-light">I-GOS: Integrated-Gradient Optimized Saliency
+                        </h1>
+                    </div>
+                    <div class="col-md-2 align-self-center textcenter">
+                        <a href="https://medium.com/@khorram.saeed/i-gos-a-casual-saliency-approach-to-explain-deep-networks-953a0460b903">
+                            <i class="fab fa-medium-m fa-2x"></i>
+                        </a>
+
+                        <a href="https://github.com/zhongangqi/IGOS">
+                            <i class="fab fa-github fa-2x"></i>
+                        </a>
+
+                        <a href="https://arxiv.org/pdf/1905.00954.pdf">
+                            <i class="far fa-file-pdf fa-2x"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--url input group-->
+            <div class="mt-5" id="inputg">
+                <p class="text-left bold">To See a Demo, Please Enter Image URL (.png, .jpg, etc.):</p>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">URL</span>
+                    </div>
+                    <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" id="url" placeholder="https://anywebsite.com/anyimage.jpg" required>
+                </div>
+                <div class="center">
+                    <a href="#results"><button type="button" class="btn btn-dark center" id="run">Generate Explanation</button></a>
+                </div>
+            </div>
+
+
+            <div class="my-3" id="carousel">
+                <p class="text-left bold">Or Select from Images Below:</p>
+
+                <div id="multi-item-example" class="carousel slide carousel-multi-item carousel-multi-item-2" data-ride="carousel">
+
+
+                    <div class="controls-top">
+                        <a class="black-text" href="#multi-item-example" data-slide="prev"><i class="fas fa-angle-left fa-3x pr-3"></i></a>
+                        <a class="black-text" href="#multi-item-example" data-slide="next"><i class="fas fa-angle-right fa-3x pl-3"></i></a>
+                    </div>
+
+                    <br>
+
+                    <div class="carousel-inner" role="listbox">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!--footer-->
+            <div class="fixed-bottom" id="footer">
+                <p class="center mx-auto my-2 font-weight-light">&copy; Department of Computer Science and Electrical
+                    Engineering, Oregon State University -- This demo is inspired form
+                    <a href="https://cs-people.bu.edu/vpetsiuk/rise/demo.html">here</a>. </p>
+            </div>
+        </div>
+        <!--container-fluid close-->
+
+    </section>
+
+
+    <section id="results" hidden='hidden'>
+        <!--image and generated video section-->
+        <div class="container">
+
+
+
+            <div class="row my-4">
+                <!--Image-->
+                <div class="col-md-12">
+                    <div class="offset-md-2 col-md-8">
+                    <p class="mx-auto bg-warning"><i class="" id="cat-name"></i></p>
+                    </div>
+                </div>
+
+                <div class="offset-md-2 col-md-2 align-self-center">
+                   <div class="text-center mx-auto" id="image_holder" hidden='hidden'>
+                        <p class="my-1"> Chosen Image </p>
+                        <img src="" class="rounded img-thumbnail" alt="Given Image" id="selected-image" height="250"
+                             width="250">
+                    </div>
+                </div>
+
+                <div class="col-md-3 align-self-center">
+                    <div class="text-center mx-auto" id="igos-holder" hidden='hidden'>
+                        <p class="my-2"> I-GOS</p>
+                        <img src="" class="rounded img-thumbnail" alt="Given Saliency" id="igos-image">
+                    </div>
+                </div>
+
+                <div class="col-md-3 align-self-center">
+                    <div class="text-center mx-auto" id="gcam-holder" hidden='hidden'>
+                        <p class="my-2"> Grad-CAM</p>
+                        <img src="" class="rounded img-thumbnail" alt="Given Saliency" id="gcam-image">
+                    </div>
+                </div>
+            </div>
+
+           <div class="row ">
+
+                <div class="offset-md-2 col-md-1 ">
+                    <button type="button" class="btn btn-sm" id="play-button">Play</button>
+                </div>
+
+               <div class="col-md-7">
+                   <div class="mx-auto my-2" id="slider"></div>
+               </div>
+
+               <div class="offset-md-2 col-md-8 mt-1" id="slide_note">
+                       <p class="mx-auto my-2 bg-warning"><i class="fas fa-angle-double-left"></i> slide for <abbr
+                       data-toggle="tooltip" class="font-weight-bold"
+                       title="Deletion metric shows how fast the network's prediction confidence will drop by blurring patches of pixels, according to the saliency mask values, (smaller AUC is better). On the other hand, for the insertion metric, starting from a highly-blurred image, patches of pixels are inserted back to the image to see how fast the prediction confidence increases (higher AUC is better). For further discussion on these metrics, please refer to the paper.">
+                           Insertion/Deletion</abbr> curve <i class="fas fa-angle-double-right"></i></p>
+                                              <p class="mx-auto my-2 bg-warning">(y-axis): CNN's confidence on the image to the left of the plot.</p>
+
+               </div>
+
+           </div>
+
+
+           <div class="row mt-2">
+                <!--Video-->
+
+                <div class="col-md-3">
+
+                    <div class="text-center" id="ins-del-holder" hidden='hidden'>
+{#                        <p class="vericaltext">test</p>#}
+                        <p class="my-1"> I-GOS Deletion</p>
+                        <img src="" class="rounded img-thumbnail" alt="Deletion Image" id="del-image">
+
+                        <p class="my-1"> I-GOS Insertion</p>
+                        <img src="" class="rounded img-thumbnail" alt="Insertion Image" id="ins-image">
+                    </div>
+
+                </div>
+
+
+
+              <div class="mt-4 col-md-3">
+                   <div id="line-chart-del"></div>
+                  <div id="line-chart-ins"></div>
+              </div>
+
+
+              <div class="col-md-3">
+
+                    <div class="text-center" id="ins-del-holder-gcam" hidden='hidden'>
+                        <p class="my-1"> Grad-CAM Deletion</p>
+                        <img src="" class="rounded img-thumbnail" alt="Deletion Image" id="del-image-gcam">
+
+                        <p class="my-1"> Grad-CAM Insertion</p>
+                        <img src="" class="rounded img-thumbnail" alt="Insertion Image" id="ins-image-gcam">
+
+
+                    </div>
+
+                </div>
+
+
+                 <div class="mt-4 col-md-3">
+                   <div id="line-chart-del-gcam"></div>
+                   <div id="line-chart-ins-gcam"></div>
+                 </div>
+
+            </div>
+
+            <div class="row">
+                    <div class="mx-auto" id="loading">
+                        <p class="mt-5">Generating Explanations ... </p>
+                        <p class="my-2">Please be patient, plotting Insertion/Deletion images might take up to 90 seconds <i class="far fa-surprise"></i> </p>
+                        <div class="sk-circle">
+                            <div class="sk-circle1 sk-child"></div>
+                            <div class="sk-circle2 sk-child"></div>
+                            <div class="sk-circle3 sk-child"></div>
+                            <div class="sk-circle4 sk-child"></div>
+                            <div class="sk-circle5 sk-child"></div>
+                            <div class="sk-circle6 sk-child"></div>
+                            <div class="sk-circle7 sk-child"></div>
+                            <div class="sk-circle8 sk-child"></div>
+                            <div class="sk-circle9 sk-child"></div>
+                            <div class="sk-circle10 sk-child"></div>
+                            <div class="sk-circle11 sk-child"></div>
+                            <div class="sk-circle12 sk-child"></div>
+                        </div>
+                    </div>
+            </div>
+
+
+            <div class="row" id="plotly-row"></div>
+        </div>
+    </section>
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://vjs.zencdn.net/ie8/ie8-version/videojs-ie8.min.js"></script>
+    <script src="/static/js/script.js" crossorigin="anonymous"></script>
+</body>
+
+</html>
